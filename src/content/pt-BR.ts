@@ -1,0 +1,121 @@
+import type { GameText } from './types';
+
+export const ptBR: GameText = {
+  title: 'O Mistério do Globo das Nações',
+  subtitle: 'Uma aventura pelo mundo',
+  ui: {
+    play: 'Jogar',
+    continue: 'Continuar',
+    newGame: 'Novo jogo',
+    next: 'Próximo',
+    skip: 'Pular',
+    back: 'Voltar',
+    confirm: 'Vamos lá!',
+    comingSoon: 'Esta aventura está chegando em breve!',
+    locked: 'Primeiro complete a aventura anterior!',
+    rotateDevice: 'Gire o aparelho para jogar',
+    chooseHero: 'Quem vai salvar o mundo?',
+    heroChosen: (name) => `Você escolheu ${name}! Toque em "Vamos lá" para começar.`,
+    mapTitle: 'Mapa da Aventura',
+    mapNarration: 'Toque no lugar que está brilhando para viajar até lá!',
+    fragmentsCollected: (count, total) => `${count} de ${total} fragmentos`,
+    confirmNewGame: 'Começar de novo? Toque de novo para confirmar.',
+    allFragmentsSoon: 'Você juntou todos os fragmentos! O Altar do Mundo está chegando em breve.',
+    gotItem: (name) => `Você pegou: ${name}!`,
+    continueAdventure: 'Continuar',
+  },
+  heroes: {
+    joao: { name: 'João', role: 'O Navegador' },
+    gabriel: { name: 'Gabriel', role: 'O Inventor' },
+    larissa: { name: 'Larissa', role: 'A Exploradora' },
+  },
+  intro: [
+    {
+      title: 'O Globo das Nações',
+      narration:
+        'Existe um globo mágico chamado Globo das Nações. Ele mantém a amizade entre todos os povos do mundo.',
+    },
+    {
+      title: 'A grande tempestade',
+      narration: 'Mas uma tempestade mágica partiu o globo em cinco fragmentos, que voaram para longe!',
+    },
+    {
+      title: 'Uma missão para você',
+      narration:
+        'Agora você precisa viajar pelo mundo, encontrar os cinco fragmentos e unir o globo de novo. Vamos nessa?',
+    },
+  ],
+  items: {
+    peixe: { name: 'Peixe fresco', the: 'o peixe' },
+    chaves: { name: 'Chaves perdidas', the: 'as chaves' },
+    lanterna: { name: 'Lanterna', the: 'a lanterna' },
+    celular: { name: 'Celular', the: 'o celular' },
+    bife: { name: 'Bife', the: 'o bife' },
+    frutas: { name: 'Frutas', the: 'as frutas' },
+    'super-balde': { name: 'Super Balde', the: 'o Super Balde' },
+  },
+  fragments: {
+    gelo: { name: 'Fragmento de Gelo' },
+    conhecimento: { name: 'Fragmento do Conhecimento' },
+    brilho: { name: 'Fragmento do Brilho' },
+    natureza: { name: 'Fragmento da Natureza' },
+    alegria: { name: 'Fragmento da Alegria' },
+  },
+  levels: {
+    alasca: {
+      country: 'Alasca',
+      place: 'Geleiras e Caverna de Cristal',
+      intro: [
+        'Bem-vindo ao Alasca! Que frio!',
+        'O Fragmento de Gelo está lá no fundo da caverna de cristal. Ande para a direita para explorar.',
+      ],
+      targets: { urso: 'o Urso Polar' },
+      lines: {
+        bearBlocks: 'Grrr! O Urso Polar está bravo e não deixa ninguém passar. Talvez ele esteja com fome...',
+        bearFed: 'Nham, nham! O urso adorou o peixe... e ficou com soninho.',
+        bearAsleep: 'O urso dormiu! Agora você pode entrar na caverna.',
+        fragmentShines: 'Olha! Algo está brilhando dentro da caverna!',
+      },
+      celebration: 'Parabéns! Você encontrou o Fragmento de Gelo!',
+    },
+    inglaterra: {
+      country: 'Inglaterra',
+      place: 'Escola Britânica',
+      intro: [],
+      targets: { janela: 'a janela', diretor: 'o Diretor Mau', armario: 'o armário' },
+      lines: {},
+      celebration: 'Parabéns! Você encontrou o Fragmento do Conhecimento!',
+    },
+    dubai: {
+      country: 'Dubai',
+      place: 'Dubai Mall',
+      intro: [],
+      targets: { pegadas: 'as pegadas', gerador: 'o gerador' },
+      lines: {},
+      celebration: 'Parabéns! Você encontrou o Fragmento do Brilho!',
+    },
+    africa: {
+      country: 'África',
+      place: 'Savana e Selva',
+      intro: [],
+      targets: { trilha: 'a trilha', leoes: 'os leões' },
+      lines: {},
+      celebration: 'Parabéns! Você encontrou o Fragmento da Natureza!',
+    },
+    brasil: {
+      country: 'Brasil',
+      place: 'Parque Aquático',
+      intro: [],
+      targets: { capitao: 'o Capitão Cascudo' },
+      lines: {},
+      celebration: 'Parabéns! Você encontrou o Fragmento da Alegria!',
+    },
+  },
+  hints: {
+    findItem: (item) => `Procure ${item}!`,
+    useItem: (item, target) => `Leve ${item} até ${target}!`,
+    collectFragment: 'Pegue o fragmento brilhante!',
+    wrongItem: 'Hmm, isso não funciona aqui. Tente outra coisa!',
+    notReady: 'Quase! Falta fazer outra coisa antes.',
+  },
+};
