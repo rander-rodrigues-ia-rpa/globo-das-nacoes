@@ -25,7 +25,9 @@ export class TitleScene extends Phaser.Scene {
     const globe = this.add.image(GAME_WIDTH / 2, 250, 'globe').setScale(0.95);
     this.tweens.add({ targets: globe, y: 235, angle: 3, duration: 1800, yoyo: true, repeat: -1, ease: 'Sine.InOut' });
 
-    this.add.text(GAME_WIDTH / 2, 80, text.title, textStyle(64)).setOrigin(0.5);
+    const banner = this.add.image(GAME_WIDTH / 2, 84, 'title-banner');
+    this.add.text(GAME_WIDTH / 2, 78, text.title, textStyle(54)).setOrigin(0.5);
+    this.tweens.add({ targets: banner, scaleX: 1.02, scaleY: 1.04, duration: 1400, yoyo: true, repeat: -1, ease: 'Sine.InOut' });
 
     // Dois heróis à esquerda e um à direita, "pulando" de animação.
     const spots = [

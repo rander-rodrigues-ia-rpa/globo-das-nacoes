@@ -6,10 +6,12 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { drawAfrica } from './art/africa.mjs';
+import { drawApp } from './art/app.mjs';
 import { drawBrazil } from './art/brasil.mjs';
 import { drawDubai } from './art/dubai.mjs';
 import { drawEngland } from './art/inglaterra.mjs';
 import { drawFinale } from './art/final.mjs';
+import { drawHeroes } from './art/herois.mjs';
 
 const OUT = join(dirname(fileURLToPath(import.meta.url)), '..', 'public', 'assets', 'sprites');
 mkdirSync(OUT, { recursive: true });
@@ -23,63 +25,8 @@ const write = (name, content) => writeFileSync(join(OUT, name), content);
 const OUTLINE = '#2B2A4C';
 
 // ---------------------------------------------------------------- Heróis
-const HEROES = {
-  joao: {
-    skin: '#F2C79B', jacket: '#2F7BD8', jacketDark: '#1F5FB0', pants: '#3B4A6B', pack: '#C9853A',
-    hairShape: `<path d="M44 84 Q40 30 100 26 Q160 30 156 84 Q150 58 132 56 L136 40 L118 52 L112 34 L98 52 L86 36 L80 56 Q56 58 44 84Z" fill="#6B3E1E"/>`,
-    extra: '',
-  },
-  gabriel: {
-    skin: '#FAD9B8', jacket: '#F29A1F', jacketDark: '#D27A08', pants: '#5B4A3A', pack: '#7A8A99',
-    hairShape: `<path d="M42 88 Q36 28 100 24 Q164 28 158 88 Q152 50 120 46 Q100 60 76 48 Q50 56 42 88Z" fill="#F5C542"/>`,
-    extra:
-      `<rect x="46" y="52" width="108" height="12" rx="6" fill="#7A5230"/>` +
-      `<circle cx="80" cy="56" r="15" fill="#8FD3FF" stroke="#7A5230" stroke-width="6"/>` +
-      `<circle cx="120" cy="56" r="15" fill="#8FD3FF" stroke="#7A5230" stroke-width="6"/>` +
-      `<circle cx="75" cy="51" r="4" fill="#fff"/><circle cx="115" cy="51" r="4" fill="#fff"/>`,
-  },
-  larissa: {
-    skin: '#8D5A3B', jacket: '#2FA36B', jacketDark: '#1E7F51', pants: '#6A3B6E', pack: '#E0564F',
-    hairShape:
-      `<circle cx="160" cy="70" r="26" fill="#2B1A12"/>` +
-      `<path d="M40 92 Q34 26 100 24 Q166 26 160 92 Q150 54 118 50 Q96 44 74 52 Q50 60 40 92Z" fill="#2B1A12"/>` +
-      `<path d="M52 58 Q100 30 150 58" stroke="#FFD23F" stroke-width="8" fill="none" stroke-linecap="round"/>`,
-    extra: '',
-  },
-};
-
-function hero({ skin, jacket, jacketDark, pants, pack, hairShape, extra }) {
-  return svg(
-    200,
-    280,
-    // mochila
-    `<rect x="42" y="136" width="40" height="70" rx="14" fill="${pack}" stroke="${OUTLINE}" stroke-width="4"/>` +
-      // pernas e sapatos
-      `<rect x="72" y="200" width="24" height="56" rx="10" fill="${pants}" stroke="${OUTLINE}" stroke-width="4"/>` +
-      `<rect x="104" y="200" width="24" height="56" rx="10" fill="${pants}" stroke="${OUTLINE}" stroke-width="4"/>` +
-      `<ellipse cx="82" cy="260" rx="20" ry="11" fill="#3A2E2A" stroke="${OUTLINE}" stroke-width="4"/>` +
-      `<ellipse cx="120" cy="260" rx="20" ry="11" fill="#3A2E2A" stroke="${OUTLINE}" stroke-width="4"/>` +
-      // braços
-      `<rect x="44" y="140" width="26" height="62" rx="13" fill="${jacketDark}" stroke="${OUTLINE}" stroke-width="4" transform="rotate(12 57 140)"/>` +
-      `<rect x="130" y="140" width="26" height="62" rx="13" fill="${jacketDark}" stroke="${OUTLINE}" stroke-width="4" transform="rotate(-12 143 140)"/>` +
-      `<circle cx="50" cy="204" r="12" fill="${skin}" stroke="${OUTLINE}" stroke-width="4"/>` +
-      `<circle cx="150" cy="204" r="12" fill="${skin}" stroke="${OUTLINE}" stroke-width="4"/>` +
-      // corpo (casaco)
-      `<rect x="62" y="128" width="76" height="90" rx="28" fill="${jacket}" stroke="${OUTLINE}" stroke-width="4"/>` +
-      `<line x1="100" y1="136" x2="100" y2="214" stroke="${jacketDark}" stroke-width="4"/>` +
-      `<rect x="62" y="128" width="76" height="20" rx="10" fill="#FFFFFF" opacity="0.85"/>` +
-      // cabeça
-      `<circle cx="100" cy="86" r="58" fill="${skin}" stroke="${OUTLINE}" stroke-width="4"/>` +
-      hairShape +
-      // rosto
-      `<ellipse cx="80" cy="92" rx="8" ry="11" fill="${OUTLINE}"/><ellipse cx="120" cy="92" rx="8" ry="11" fill="${OUTLINE}"/>` +
-      `<circle cx="83" cy="87" r="3.5" fill="#fff"/><circle cx="123" cy="87" r="3.5" fill="#fff"/>` +
-      `<circle cx="66" cy="110" r="9" fill="#FF8A8A" opacity="0.5"/><circle cx="134" cy="110" r="9" fill="#FF8A8A" opacity="0.5"/>` +
-      `<path d="M86 114 Q100 128 114 114" stroke="${OUTLINE}" stroke-width="5" fill="none" stroke-linecap="round"/>` +
-      extra,
-  );
-}
-for (const [id, look] of Object.entries(HEROES)) write(`hero-${id}.svg`, hero(look));
+drawHeroes({ write });
+drawApp({ write });
 
 // ---------------------------------------------------------------- Fragmentos
 const FRAGMENTS = {

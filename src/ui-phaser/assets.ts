@@ -35,6 +35,7 @@ const ASSETS: SvgAsset[] = [
   { key: 'bear-sleeping', file: 'bear-sleeping.svg' },
   { key: 'globe', file: 'globe.svg' },
   { key: 'world-map', file: 'world-map.svg' },
+  { key: 'title-banner', file: 'title-banner.svg' },
   { key: 'bg-alasca', file: 'bg-alasca.svg' },
   // Fase 2 — Inglaterra
   { key: 'bg-inglaterra', file: 'bg-inglaterra.svg' },

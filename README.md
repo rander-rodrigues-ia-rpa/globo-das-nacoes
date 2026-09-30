@@ -4,6 +4,8 @@ Jogo de aventura infantil (5 a 10 anos) para **navegador, tablet e celular**.
 Uma tempestade mágica partiu o Globo das Nações em 5 fragmentos; a criança escolhe
 um herói (João, Gabriel ou Larissa) e viaja pelo mundo para recuperá-los.
 
+Jogo idealizado pela Larissa — que também inspirou a heroína de mesmo nome.
+
 > Documentos de origem (pitch e roteiro): [`docs/referencias/`](docs/referencias/)
 
 ## Estado atual
@@ -18,7 +20,8 @@ um herói (João, Gabriel ou Larissa) e viaja pelo mundo para recuperá-los.
 | **Fase 4 — África** (trilha de comida leva os leões até a lagoa → Fragmento da Natureza) | ✅ jogável |
 | **Fase 5 — Brasil** (escalar a torre pulando caixotes, Super Balde no Capitão Cascudo → Fragmento da Alegria) | ✅ jogável |
 | **Altar do Mundo** (montar o globo: arrastar ou tocar em cada fragmento) e **epílogo** (vilões redimidos, mensagem final e créditos) | ✅ |
-| Arte e sons | **provisórios** (SVG gerado + voz sintetizada do aparelho) |
+| Instalação | ✅ PWA (offline) e APK Android |
+| Arte e sons | provisórios, já com heróis detalhados e ícone próprio (SVG gerado + voz sintetizada do aparelho) |
 
 ## Como rodar
 
@@ -33,6 +36,32 @@ npm run build      # gera a versão publicável em dist/
 
 O `dist/` é um site estático: pode ir para GitHub Pages, Netlify, itch.io ou ser
 empacotado como app com Capacitor.
+
+## Instalar no celular ou tablet
+
+### Opção 1 — App Android (APK), sem loja
+
+```bash
+npm run apk
+```
+
+Gera `apk/GloboDasNacoes.apk` (precisa do Android Studio instalado — o script usa o Java e o
+SDK que vêm com ele). Para instalar: copie o arquivo para o celular Android, toque nele e
+permita "instalar apps de fontes desconhecidas" quando o Android perguntar. O jogo funciona
+sem internet e abre sempre com a tela deitada.
+
+### Opção 2 — PWA (Android, iPhone, iPad e computador)
+
+O jogo é um PWA: pode ser "instalado" direto do navegador e funciona offline depois da
+primeira abertura. Só precisa estar publicado num endereço `https`:
+
+1. No GitHub: **Settings → Pages → Source: GitHub Actions** (uma vez só).
+2. A cada envio para a `main`, a automação em `.github/workflows/deploy-pages.yml`
+   testa e publica o jogo em `https://<usuario>.github.io/globo-das-nacoes/`.
+3. No celular, abra o link e use **"Adicionar à tela inicial"** (Android: menu ⋮ do Chrome;
+   iPhone/iPad: botão Compartilhar do Safari).
+
+Ícones do app: `npm run icons` (gera os PNGs do PWA e do Android a partir de `scripts/art/app.mjs`).
 
 ## Controles
 
