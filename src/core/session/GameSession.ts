@@ -2,6 +2,7 @@ import type { FragmentId, HeroId, LevelId } from '../domain/ids';
 import { Emitter } from '../events/Emitter';
 import type { LevelCatalog } from '../levels/LevelCatalog';
 import { LevelRun } from '../levels/LevelRun';
+import { GlobeAssembly } from '../altar/GlobeAssembly';
 import type { SaveRepository } from '../ports/SaveRepository';
 import { emptySave, parseSave, type SaveData, type Settings } from './SaveData';
 
@@ -88,6 +89,24 @@ export class GameSession {
     const run = new LevelRun(this.catalog.get(id));
     run.events.on('fragment-collected', ({ fragmentId }) => this.completeLevel(id, fragmentId));
     return run;
+  }
+
+  get globeRestored(): boolean {
+    return this.data.globeRestored;
+  }
+
+  /**
+   * Começa a montagem do globo no Altar do Mundo. Só é possível com todos os
+   * fragmentos; ao completar, a conquista é salva sozinha.
+   */
+  startAltar(): GlobeAssembly {
+    if (!this.allFragmentsCollected()) throw new Error('Ainda faltam fragmentos para o Altar do Mundo');
+    const assembly = new GlobeAssembly(this.catalog.fragments());
+    assembly.events.on('complete', () => {
+      this.data.globeRestored = true;
+      this.persist();
+    });
+    return assembly;
   }
 
   resetProgress(): void {

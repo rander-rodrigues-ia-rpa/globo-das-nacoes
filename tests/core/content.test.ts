@@ -17,6 +17,7 @@ describe('conteúdo pt-BR', () => {
       expect(text.fragments[level.fragmentId]?.name, `fragmento ${level.fragmentId}`).toBeTruthy();
       for (const pickup of level.script.pickups) expect(text.items[pickup.item]?.the, `item ${pickup.item}`).toBeTruthy();
       for (const target of level.script.targets) expect(levelText?.targets[target.id], `alvo ${target.id}`).toBeTruthy();
+      expect(text.epilogue.panels[level.id], 'quadro do epílogo').toBeTruthy();
     });
   }
 });

@@ -14,6 +14,8 @@ export interface SaveData {
   introSeen: boolean;
   completedLevels: LevelId[];
   fragments: FragmentId[];
+  /** O globo já foi remontado no Altar do Mundo (final da história). */
+  globeRestored: boolean;
   settings: Settings;
 }
 
@@ -24,6 +26,7 @@ export function emptySave(): SaveData {
     introSeen: false,
     completedLevels: [],
     fragments: [],
+    globeRestored: false,
     settings: { narration: true, sound: true },
   };
 }
@@ -42,6 +45,7 @@ export function parseSave(raw: unknown): SaveData {
     introSeen: data.introSeen === true,
     completedLevels: [...new Set(strings(data.completedLevels))],
     fragments: [...new Set(strings(data.fragments))],
+    globeRestored: data.globeRestored === true,
     settings: {
       narration: typeof settings.narration === 'boolean' ? settings.narration : base.settings.narration,
       sound: typeof settings.sound === 'boolean' ? settings.sound : base.settings.sound,

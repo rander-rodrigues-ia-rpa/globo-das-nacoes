@@ -9,6 +9,7 @@ import { drawAfrica } from './art/africa.mjs';
 import { drawBrazil } from './art/brasil.mjs';
 import { drawDubai } from './art/dubai.mjs';
 import { drawEngland } from './art/inglaterra.mjs';
+import { drawFinale } from './art/final.mjs';
 
 const OUT = join(dirname(fileURLToPath(import.meta.url)), '..', 'public', 'assets', 'sprites');
 mkdirSync(OUT, { recursive: true });
@@ -331,6 +332,7 @@ drawEngland({ svg, write, OUTLINE });
 drawDubai({ svg, write, OUTLINE });
 drawAfrica({ svg, write, OUTLINE });
 drawBrazil({ svg, write, OUTLINE });
+drawFinale({ svg, write, OUTLINE });
 
 // Floco de neve (partícula) e brilho.
 write('snowflake.svg', svg(16, 16, `<circle cx="8" cy="8" r="6" fill="#fff"/>`));

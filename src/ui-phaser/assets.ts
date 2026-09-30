@@ -13,6 +13,15 @@ const SPRITES = 'assets/sprites/';
 
 export const FRAGMENT_KEYS = ['gelo', 'conhecimento', 'brilho', 'natureza', 'alegria'] as const;
 
+/** Cor de cada fragmento (a mesma da arte) — usada nos encaixes do Altar do Mundo. */
+export const FRAGMENT_COLORS: Record<string, number> = {
+  gelo: 0x46b7f0,
+  conhecimento: 0xf7c948,
+  brilho: 0xff9f2e,
+  natureza: 0x3cc46a,
+  alegria: 0xff4d6d,
+};
+
 const ASSETS: SvgAsset[] = [
   ...['joao', 'gabriel', 'larissa'].map((id) => ({ key: `hero-${id}`, file: `hero-${id}.svg` })),
   ...FRAGMENT_KEYS.flatMap((id) => [
@@ -66,6 +75,13 @@ const ASSETS: SvgAsset[] = [
   { key: 'pool-water', file: 'pool-water.svg' },
   { key: 'captain', file: 'captain.svg' },
   { key: 'captain-wet', file: 'captain-wet.svg' },
+  // Final: Altar do Mundo e epílogo
+  { key: 'bg-altar', file: 'bg-altar.svg' },
+  { key: 'globe-sphere', file: 'globe-sphere.svg' },
+  { key: 'globe-ghost', file: 'globe-ghost.svg' },
+  { key: 'director-reading', file: 'director-reading.svg' },
+  { key: 'thief-friendly', file: 'thief-friendly.svg' },
+  { key: 'captain-float', file: 'captain-float.svg' },
   { key: 'snowflake', file: 'snowflake.svg' },
   { key: 'sparkle', file: 'sparkle.svg' },
   ...['hint', 'home', 'sound-on', 'sound-off', 'lock', 'arrow'].map((id) => ({ key: `icon-${id}`, file: `icon-${id}.svg` })),

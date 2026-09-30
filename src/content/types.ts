@@ -24,7 +24,9 @@ export interface GameText {
     mapNarration: string;
     fragmentsCollected: (count: number, total: number) => string;
     confirmNewGame: string;
-    allFragmentsSoon: string;
+    allFragmentsReady: string;
+    worldUnited: string;
+    altarPin: string;
     gotItem: (itemName: string) => string;
     continueAdventure: string;
     jump: string;
@@ -35,6 +37,22 @@ export interface GameText {
   items: Record<string, { name: string; the: string }>;
   fragments: Record<string, { name: string }>;
   levels: Record<string, LevelText>;
+  altar: {
+    title: string;
+    intro: string;
+    wrongSlot: string;
+    placed: readonly string[];
+    activation: string;
+    celebration: string;
+  };
+  epilogue: {
+    title: string;
+    /** Um quadro por fase: o que aconteceu com o "vilão" depois da aventura. */
+    panels: Record<string, string>;
+    message: string;
+    credits: readonly string[];
+    backToMap: string;
+  };
   hints: {
     findItem: (item: string) => string;
     useItem: (item: string, target: string) => string;

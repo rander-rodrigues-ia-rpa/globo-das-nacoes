@@ -10,3 +10,4 @@ export * from './ports/SaveRepository';
 export * from './ports/Presentation';
 export * from './session/SaveData';
 export * from './session/GameSession';
+export * from './altar/GlobeAssembly';

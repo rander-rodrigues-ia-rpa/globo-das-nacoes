@@ -22,14 +22,16 @@ export interface LevelView {
   pin: { x: number; y: number };
   color: number;
   scene?: new () => Phaser.Scene;
+  /** Quadro do epílogo: como o "vilão" da fase ficou depois da aventura. */
+  epilogue?: { texture: string; scale: number };
 }
 
 export const LEVEL_VIEWS: readonly LevelView[] = [
-  { levelId: 'alasca', pin: { x: 150, y: 190 }, color: 0x46b7f0, scene: AlaskaScene },
-  { levelId: 'inglaterra', pin: { x: 572, y: 150 }, color: 0xf7c948, scene: EnglandScene },
-  { levelId: 'dubai', pin: { x: 800, y: 292 }, color: 0xff9f2e, scene: DubaiScene },
-  { levelId: 'africa', pin: { x: 690, y: 385 }, color: 0x3cc46a, scene: AfricaScene },
-  { levelId: 'brasil', pin: { x: 398, y: 470 }, color: 0xff4d6d, scene: BrazilScene },
+  { levelId: 'alasca', pin: { x: 150, y: 190 }, color: 0x46b7f0, scene: AlaskaScene, epilogue: { texture: 'bear-sleeping', scale: 0.5 } },
+  { levelId: 'inglaterra', pin: { x: 572, y: 150 }, color: 0xf7c948, scene: EnglandScene, epilogue: { texture: 'director-reading', scale: 0.62 } },
+  { levelId: 'dubai', pin: { x: 800, y: 292 }, color: 0xff9f2e, scene: DubaiScene, epilogue: { texture: 'thief-friendly', scale: 0.66 } },
+  { levelId: 'africa', pin: { x: 690, y: 385 }, color: 0x3cc46a, scene: AfricaScene, epilogue: { texture: 'lion-lying', scale: 0.55 } },
+  { levelId: 'brasil', pin: { x: 398, y: 470 }, color: 0xff4d6d, scene: BrazilScene, epilogue: { texture: 'captain-float', scale: 0.62 } },
 ];
 
 export function levelView(levelId: LevelId): LevelView | undefined {

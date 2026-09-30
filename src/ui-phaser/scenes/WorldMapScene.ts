@@ -11,6 +11,8 @@ import { Hud } from '../ui/Hud';
 import { onTap } from '../ui/onTap';
 import { fadeIn, goTo } from '../ui/transitions';
 
+const ALTAR_PIN = { x: 970, y: 440 };
+
 /** Mapa interativo do mundo: uma "bolinha" por fase, liberadas em sequência. */
 export class WorldMapScene extends Phaser.Scene {
   private hero!: Phaser.GameObjects.Image;
@@ -51,7 +53,28 @@ export class WorldMapScene extends Phaser.Scene {
       .setDepth(10);
     this.tweens.add({ targets: this.hero, y: this.hero.y - 10, duration: 450, yoyo: true, repeat: -1, ease: 'Sine.InOut' });
 
-    this.caption.say(session.allFragmentsCollected() ? text.ui.allFragmentsSoon : text.ui.mapNarration);
+    if (session.allFragmentsCollected()) this.createAltarPin(session.globeRestored);
+    this.caption.say(
+      session.globeRestored ? text.ui.worldUnited : session.allFragmentsCollected() ? text.ui.allFragmentsReady : text.ui.mapNarration,
+    );
+  }
+
+  /** Com todos os fragmentos, aparece o Altar do Mundo (dourado, no meio do oceano). */
+  private createAltarPin(restored: boolean): void {
+    const { text } = services(this);
+    const spot = ALTAR_PIN;
+    const pin = this.add.container(spot.x, spot.y).setDepth(5);
+    const glow = this.add.circle(0, 0, 70, 0xfff3b0, 0.8);
+    const disk = this.add.circle(0, 0, 50, 0xf7c948).setStrokeStyle(6, COLORS.ink);
+    const globe = this.add.image(0, 0, 'globe-sphere').setScale(0.26);
+    const label = this.add.text(0, 66, text.ui.altarPin, textStyle(26)).setOrigin(0.5, 0);
+    pin.add([glow, disk, globe, label]);
+    this.tweens.add({ targets: glow, scale: 1.3, alpha: 0.2, duration: 1000, yoyo: true, repeat: -1 });
+    if (!restored) this.tweens.add({ targets: pin, scale: 1.08, duration: 600, yoyo: true, repeat: -1, ease: 'Sine.InOut' });
+    pin.setSize(140, 170).setInteractive({ useHandCursor: true });
+    onTap(pin, () => {
+      if (!this.traveling) this.travel(spot, SCENES.altar, text.ui.altarPin);
+    });
   }
 
   private drawRoute(views: LevelView[]): void {
@@ -122,19 +145,24 @@ export class WorldMapScene extends Phaser.Scene {
   }
 
   private travelTo(view: LevelView): void {
-    const { sfx, narrator, text } = services(this);
+    const levelText = services(this).text.levels[view.levelId];
+    this.travel(view.pin, levelSceneKey(view.levelId), levelText?.country);
+  }
+
+  /** O herói "pula" até o destino no mapa e a cena troca. */
+  private travel(to: { x: number; y: number }, sceneKey: string, spokenName?: string): void {
+    const { sfx, narrator } = services(this);
     this.traveling = true;
     sfx.play('success');
-    const levelText = text.levels[view.levelId];
-    if (levelText) narrator.speak(levelText.country);
+    if (spokenName) narrator.speak(spokenName);
     this.tweens.killTweensOf(this.hero);
     this.tweens.add({
       targets: this.hero,
-      x: view.pin.x,
-      y: view.pin.y - 36,
+      x: to.x,
+      y: to.y - 36,
       duration: 700,
       ease: 'Sine.InOut',
-      onComplete: () => goTo(this, levelSceneKey(view.levelId)),
+      onComplete: () => goTo(this, sceneKey),
     });
     this.tweens.add({ targets: this.hero, scale: 0.45, duration: 350, yoyo: true });
   }

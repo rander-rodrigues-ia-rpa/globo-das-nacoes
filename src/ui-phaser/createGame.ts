@@ -1,7 +1,9 @@
 import Phaser from 'phaser';
 import { provideServices, type AppServices } from './AppServices';
 import { LEVEL_VIEWS } from './levels/registry';
+import { AltarScene } from './scenes/AltarScene';
 import { BootScene } from './scenes/BootScene';
+import { EpilogueScene } from './scenes/EpilogueScene';
 import { HeroSelectScene } from './scenes/HeroSelectScene';
 import { IntroScene } from './scenes/IntroScene';
 import { TitleScene } from './scenes/TitleScene';
@@ -24,7 +26,7 @@ export function createGame(parent: string | HTMLElement, services: AppServices):
     },
     input: { activePointers: 2 },
     render: { antialias: true },
-    scene: [BootScene, TitleScene, HeroSelectScene, IntroScene, WorldMapScene, ...levelScenes],
+    scene: [BootScene, TitleScene, HeroSelectScene, IntroScene, WorldMapScene, ...levelScenes, AltarScene, EpilogueScene],
   });
   provideServices(game, services);
   return game;

@@ -17,7 +17,7 @@ um herói (João, Gabriel ou Larissa) e viaja pelo mundo para recuperá-los.
 | **Fase 3 — Dubai** (blecaute, lanterna revela pegadas, perseguição, minijogo do celular → Fragmento do Brilho) | ✅ jogável |
 | **Fase 4 — África** (trilha de comida leva os leões até a lagoa → Fragmento da Natureza) | ✅ jogável |
 | **Fase 5 — Brasil** (escalar a torre pulando caixotes, Super Balde no Capitão Cascudo → Fragmento da Alegria) | ✅ jogável |
-| Altar do Mundo e epílogo | a fazer |
+| **Altar do Mundo** (montar o globo: arrastar ou tocar em cada fragmento) e **epílogo** (vilões redimidos, mensagem final e créditos) | ✅ |
 | Arte e sons | **provisórios** (SVG gerado + voz sintetizada do aparelho) |
 
 ## Como rodar

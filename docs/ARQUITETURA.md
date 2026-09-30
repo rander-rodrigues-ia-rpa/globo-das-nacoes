@@ -44,7 +44,9 @@
 - **`LevelCatalog`**: registro das fases com **validação** (erros de digitação no roteiro
   viram erro na hora de registrar, não um bug escondido no jogo).
 - **`GameSession`**: herói escolhido, fases liberadas/concluídas, fragmentos e preferências.
-  Salva sozinha quando um fragmento é coletado.
+  Salva sozinha quando um fragmento é coletado e quando o globo é remontado.
+- **`GlobeAssembly`**: a montagem do Altar do Mundo — cada fragmento no encaixe da mesma
+  cor. Usa os fragmentos do catálogo, então fases novas ganham encaixe automaticamente.
 
 ### Frontend (`src/ui-phaser`)
 
@@ -82,7 +84,9 @@
    Fases verticais informam `height` no `WorldLayout` e podem trocar `layout.walkArea`
    (o "andar" atual) a qualquer momento — veja `BrazilScene`. A profundidade no mundo é
    a altura (y); HUD e sobreposições ficam acima de tudo (`DEPTH` em `theme.ts`).
-5. **Registro** — em `src/ui-phaser/levels/registry.ts`, informe a posição no mapa e a `scene`.
+5. **Registro** — em `src/ui-phaser/levels/registry.ts`, informe a posição no mapa, a `scene`
+   e o quadro do `epilogue` (a cor do fragmento vai em `FRAGMENT_COLORS`, em `assets.ts`).
+   O Altar do Mundo e o epílogo passam a incluir a fase nova sozinhos.
 
 Fases sem `scene` aparecem no mapa como "em breve" — dá para planejar a campanha antes de desenhar.
 
