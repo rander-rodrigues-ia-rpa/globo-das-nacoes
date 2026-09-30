@@ -13,7 +13,8 @@ import { onTap } from '../ui/onTap';
 import { fadeIn, goTo } from '../ui/transitions';
 import { PlayerAvatar } from '../world/PlayerAvatar';
 
-type Interactive = Phaser.GameObjects.Image | Phaser.GameObjects.Sprite;
+/** Qualquer coisa tocável no cenário; `Zone` serve para grupos (ex.: o bando de leões). */
+type Interactive = Phaser.GameObjects.Image | Phaser.GameObjects.Sprite | Phaser.GameObjects.Zone;
 
 type Point = { x: number; y: number };
 

@@ -24,7 +24,9 @@ export type SoundEffect =
   | 'powerdown'
   | 'powerup'
   | 'laugh'
-  | 'beep';
+  | 'beep'
+  | 'roar'
+  | 'munch';
 
 export interface SoundEffects {
   play(effect: SoundEffect): void;

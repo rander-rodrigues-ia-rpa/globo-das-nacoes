@@ -50,6 +50,24 @@ describe('LevelRun — Dubai (blecaute)', () => {
   });
 });
 
+describe('LevelRun — África (trilha de comida)', () => {
+  it('a trilha começa perto dos leões; completá-la atrai o bando para longe', () => {
+    const run = new LevelRun(catalog.get('africa'));
+    run.pickUp('bife-da-caixa-termica');
+    run.pickUp('frutas-da-mangueira');
+
+    expect(run.useItem('frutas', 'trilha-longe').kind).toBe('not-ready'); // precisa começar perto
+    expect(run.useItem('frutas', 'leoes').kind).toBe('wrong-item'); // não se joga comida nos leões
+    expect(run.usableItemsFor('trilha-perto')).toEqual(['bife', 'frutas']);
+
+    expect(run.useItem('frutas', 'trilha-perto').kind).toBe('success');
+    expect(run.nextHint()).toEqual({ kind: 'use-item', item: 'bife', target: 'trilha-longe' });
+    expect(run.useItem('bife', 'trilha-longe').kind).toBe('success');
+    expect(run.stateOf('leoes')).toBe('atraidos');
+    expect(run.items).toEqual([]);
+  });
+});
+
 describe('LevelRun — Inglaterra (condições encadeadas)', () => {
   it('só abre o armário depois de distrair o diretor com a lanterna', () => {
     const run = new LevelRun(catalog.get('inglaterra'));

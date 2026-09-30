@@ -50,8 +50,8 @@ export const ptBR: GameText = {
     chaves: { name: 'Chaves perdidas', the: 'as chaves' },
     lanterna: { name: 'Lanterna', the: 'a lanterna' },
     celular: { name: 'Celular perdido', the: 'o celular' },
-    bife: { name: 'Bife', the: 'o bife' },
-    frutas: { name: 'Frutas', the: 'as frutas' },
+    bife: { name: 'Bife suculento', the: 'o bife' },
+    frutas: { name: 'Frutas fresquinhas', the: 'as frutas' },
     'super-balde': { name: 'Super Balde', the: 'o Super Balde' },
   },
   fragments: {
@@ -125,10 +125,25 @@ export const ptBR: GameText = {
     },
     africa: {
       country: 'África',
-      place: 'Savana e Selva',
-      intro: [],
-      targets: { trilha: 'a trilha', leoes: 'os leões' },
-      lines: {},
+      place: 'Savana e Selva Densa',
+      intro: [
+        'Bem-vindo à África! Que calor!',
+        'O Fragmento da Natureza caiu no meio de uma clareira, lá na selva. Vamos explorar!',
+      ],
+      targets: {
+        'trilha-perto': 'o começo da trilha',
+        'trilha-longe': 'o fim da trilha',
+        leoes: 'os leões',
+      },
+      lines: {
+        lionsBlock: 'ROAR! Os leões protegem a clareira. Eles parecem estar com muita fome...',
+        roar: 'ROAR!',
+        lionsTapped: 'Os leões estão com fome! Que tal fazer uma trilha de comida para levá-los para longe?',
+        trailIdea: 'Coloque comida nos círculos do chão para fazer uma trilha!',
+        trailStarted: 'Hum, que cheiro bom! Agora coloque comida no fim da trilha, perto da lagoa!',
+        lionsSmell: 'Olha! Os leões sentiram o cheiro da comida!',
+        lionsHappy: 'Os leões estão comendo felizes perto da lagoa. O caminho está livre!',
+      },
       celebration: 'Parabéns! Você encontrou o Fragmento da Natureza!',
     },
     brasil: {

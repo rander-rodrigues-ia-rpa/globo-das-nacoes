@@ -44,6 +44,11 @@ const EFFECTS: Record<SoundEffect, Note[]> = {
   // "He-he-he" do ladrão.
   laugh: [0, 0.14, 0.28].map((at, i) => ({ freq: 520 - i * 40, at, duration: 0.09, type: 'square' as OscillatorType, gain: 0.06 })),
   beep: [{ freq: 988, at: 0, duration: 0.08, type: 'sine', gain: 0.15 }],
+  roar: [
+    { freq: 180, at: 0, duration: 0.7, type: 'sawtooth', slideTo: 80, gain: 0.14 },
+    { freq: 120, at: 0.05, duration: 0.6, type: 'square', slideTo: 60, gain: 0.05 },
+  ],
+  munch: [0, 0.12, 0.24].map((at) => ({ freq: 240, at, duration: 0.06, type: 'square' as OscillatorType, gain: 0.07 })),
   growl: [{ freq: 110, at: 0, duration: 0.5, type: 'sawtooth', slideTo: 70, gain: 0.12 }],
   snore: [
     { freq: 90, at: 0, duration: 0.6, type: 'sine', slideTo: 140, gain: 0.25 },

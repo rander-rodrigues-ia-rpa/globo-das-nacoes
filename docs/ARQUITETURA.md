@@ -64,7 +64,8 @@
 4. **Cena** — crie `src/ui-phaser/levels/MinhaFaseScene.ts` estendendo `BaseLevelScene`:
    implemente `buildWorld()` e registre itens (`registerPickup`), alvos (`registerTarget`;
    a posição de aproximação pode ser uma função, para alvos que andam) e o fragmento
-   (`registerFragment`). Ganchos disponíveis para o comportamento especial:
+   (`registerFragment`). Um alvo pode ser uma imagem ou uma `Zone` invisível (ex.: o bando
+   de leões inteiro). Ganchos disponíveis para o comportamento especial:
 
    | Gancho | Para quê | Exemplo |
    |---|---|---|

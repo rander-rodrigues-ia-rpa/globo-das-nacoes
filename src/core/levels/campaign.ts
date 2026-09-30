@@ -87,16 +87,26 @@ export const CAMPAIGN_LEVELS: readonly LevelDefinition[] = [
     fragmentId: 'natureza',
     script: {
       pickups: [
-        { id: 'bife', item: 'bife' },
-        { id: 'frutas', item: 'frutas' },
+        { id: 'bife-da-caixa-termica', item: 'bife' },
+        { id: 'frutas-da-mangueira', item: 'frutas' },
       ],
       targets: [
-        { id: 'trilha', initialState: 'vazia' },
+        { id: 'trilha-perto', initialState: 'vazia' },
+        { id: 'trilha-longe', initialState: 'vazia' },
         { id: 'leoes', initialState: 'guardando' },
       ],
+      // "Trail building": a comida vai no chão, formando uma trilha que começa
+      // perto dos leões e termina longe da clareira. Qualquer comida serve.
       interactions: [
-        { target: 'trilha', item: 'frutas', from: 'vazia', to: 'com-frutas' },
-        { target: 'leoes', item: 'bife', from: 'guardando', to: 'atraidos', requires: [{ target: 'trilha', state: 'com-frutas' }] },
+        ...(['bife', 'frutas'] as const).map((item) => ({ target: 'trilha-perto', item, from: 'vazia', to: 'com-comida' })),
+        ...(['bife', 'frutas'] as const).map((item) => ({
+          target: 'trilha-longe',
+          item,
+          from: 'vazia',
+          to: 'com-comida',
+          requires: [{ target: 'trilha-perto', state: 'com-comida' }],
+          effects: [{ target: 'leoes', state: 'atraidos' }],
+        })),
       ],
       fragmentRequires: [{ target: 'leoes', state: 'atraidos' }],
     },
