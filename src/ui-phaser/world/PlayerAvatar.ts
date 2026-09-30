@@ -11,6 +11,8 @@ export class PlayerAvatar extends Phaser.GameObjects.Container {
   private destination: Phaser.Math.Vector2 | null = null;
   private onArrive: (() => void) | null = null;
   private walkTime = 0;
+  /** Altura atual do pulo (0 = no chão). */
+  private jumpHeight = 0;
 
   constructor(scene: Phaser.Scene, x: number, y: number, hero: string, scale = 0.62) {
     super(scene, x, y);
@@ -66,9 +68,27 @@ export class PlayerAvatar extends Phaser.GameObjects.Container {
     } else {
       this.walkTime = 0;
     }
-    this.body_.y = -Math.abs(Math.sin(this.walkTime / 90)) * 10;
+    this.body_.y = -Math.abs(Math.sin(this.walkTime / 90)) * 10 - this.jumpHeight;
     this.body_.angle = moving ? Math.sin(this.walkTime / 90) * 4 : 0;
     return { x: this.x + vx, y: this.y + vy };
+  }
+
+  /** Está alto o bastante para passar por cima de um obstáculo? */
+  get isAirborne(): boolean {
+    return this.jumpHeight > 30;
+  }
+
+  /** Pulo (para desviar de obstáculos). Ignorado se já estiver no ar. */
+  jump(): boolean {
+    if (this.jumpHeight > 0) return false;
+    this.scene.tweens.addCounter({
+      from: 0,
+      to: 1,
+      duration: 620,
+      onUpdate: (tween) => (this.jumpHeight = Math.sin((tween.getValue() ?? 0) * Math.PI) * 110),
+      onComplete: () => (this.jumpHeight = 0),
+    });
+    return true;
   }
 
   /** Pulinho de alegria. */

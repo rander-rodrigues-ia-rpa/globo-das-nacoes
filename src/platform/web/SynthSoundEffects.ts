@@ -49,6 +49,11 @@ const EFFECTS: Record<SoundEffect, Note[]> = {
     { freq: 120, at: 0.05, duration: 0.6, type: 'square', slideTo: 60, gain: 0.05 },
   ],
   munch: [0, 0.12, 0.24].map((at) => ({ freq: 240, at, duration: 0.06, type: 'square' as OscillatorType, gain: 0.07 })),
+  jump: [{ freq: 330, at: 0, duration: 0.18, type: 'triangle', slideTo: 660, gain: 0.15 }],
+  bonk: [{ freq: 160, at: 0, duration: 0.18, type: 'square', slideTo: 90, gain: 0.1 }],
+  throw: [{ freq: 900, at: 0, duration: 0.25, type: 'sine', slideTo: 300, gain: 0.08 }],
+  // "Splash": várias gotinhas descendo rápido.
+  splash: Array.from({ length: 8 }, (_, i) => ({ freq: 1400 - i * 120, at: i * 0.04, duration: 0.12, type: 'sine' as OscillatorType, slideTo: 400, gain: 0.08 })),
   growl: [{ freq: 110, at: 0, duration: 0.5, type: 'sawtooth', slideTo: 70, gain: 0.12 }],
   snore: [
     { freq: 90, at: 0, duration: 0.6, type: 'sine', slideTo: 140, gain: 0.25 },

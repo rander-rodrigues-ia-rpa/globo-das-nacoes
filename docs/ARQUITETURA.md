@@ -73,10 +73,15 @@
    | `onTargetTapped` | tocar num alvo sem item útil | urso rosna, diretor reclama |
    | `walkLimit` / `onBlocked` | bloquear passagem | urso na caverna, porta da diretoria |
    | `onUpdate` | lógica a cada quadro | patrulha e cone de visão do diretor |
+   | `canReach` / `onUnreachable` | alvo só alcançável em certas condições | Capitão só no topo da torre |
    | `fragmentRevealDelay` | esperar a animação antes de mostrar o fragmento (ou `'manual'` + `revealFragment()`) | minijogo do celular em Dubai |
 
    Use `onTap` (em `ui/onTap.ts`) para qualquer objeto tocável: o toque só conta se
    começar e terminar no objeto.
+
+   Fases verticais informam `height` no `WorldLayout` e podem trocar `layout.walkArea`
+   (o "andar" atual) a qualquer momento — veja `BrazilScene`. A profundidade no mundo é
+   a altura (y); HUD e sobreposições ficam acima de tudo (`DEPTH` em `theme.ts`).
 5. **Registro** — em `src/ui-phaser/levels/registry.ts`, informe a posição no mapa e a `scene`.
 
 Fases sem `scene` aparecem no mapa como "em breve" — dá para planejar a campanha antes de desenhar.

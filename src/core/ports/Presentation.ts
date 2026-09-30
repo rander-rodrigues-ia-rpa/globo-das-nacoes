@@ -26,7 +26,11 @@ export type SoundEffect =
   | 'laugh'
   | 'beep'
   | 'roar'
-  | 'munch';
+  | 'munch'
+  | 'jump'
+  | 'bonk'
+  | 'throw'
+  | 'splash';
 
 export interface SoundEffects {
   play(effect: SoundEffect): void;

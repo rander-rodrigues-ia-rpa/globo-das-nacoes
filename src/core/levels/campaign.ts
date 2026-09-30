@@ -116,7 +116,9 @@ export const CAMPAIGN_LEVELS: readonly LevelDefinition[] = [
     order: 5,
     fragmentId: 'alegria',
     script: {
-      pickups: [{ id: 'super-balde', item: 'super-balde' }],
+      // A escalada da torre (desviando dos caixotes) é mecânica do frontend;
+      // a regra é simples: um banho do Super Balde tira o Capitão do caminho.
+      pickups: [{ id: 'super-balde-do-quiosque', item: 'super-balde' }],
       targets: [{ id: 'capitao', initialState: 'bloqueando' }],
       interactions: [{ target: 'capitao', item: 'super-balde', from: 'bloqueando', to: 'molhado' }],
       fragmentRequires: [{ target: 'capitao', state: 'molhado' }],

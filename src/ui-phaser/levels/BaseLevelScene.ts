@@ -26,6 +26,8 @@ interface TargetView {
 
 export interface WorldLayout {
   width: number;
+  /** Altura do mundo (fases verticais, como a torre do Brasil). Padrão: altura da tela. */
+  height?: number;
   start: { x: number; y: number };
   /** Faixa do chão onde o herói pode andar. */
   walkArea: Phaser.Geom.Rectangle;
@@ -86,6 +88,14 @@ export abstract class BaseLevelScene extends Phaser.Scene {
   /** O herói tentou passar de um bloqueio. */
   protected onBlocked(): void {}
 
+  /** O herói consegue chegar até o alvo agora? (ex.: o Capitão só é alcançável no topo da torre) */
+  protected canReach(_target: TargetId): boolean {
+    return true;
+  }
+
+  /** A criança tentou interagir com um alvo fora de alcance. */
+  protected onUnreachable(_target: TargetId): void {}
+
   /** Chamado a cada quadro enquanto a criança está no controle (patrulhas, vigias...). */
   protected onUpdate(_time: number, _delta: number): void {}
 
@@ -112,7 +122,7 @@ export abstract class BaseLevelScene extends Phaser.Scene {
 
     fadeIn(this);
     this.layout = this.buildWorld();
-    this.cameras.main.setBounds(0, 0, this.layout.width, GAME_HEIGHT);
+    this.cameras.main.setBounds(0, 0, this.layout.width, this.layout.height ?? GAME_HEIGHT);
     this.player = new PlayerAvatar(this, this.layout.start.x, this.layout.start.y, session.hero ?? 'joao');
     this.cameras.main.startFollow(this.player, true, 0.12, 0.12, 0, 60);
 
@@ -266,6 +276,10 @@ export abstract class BaseLevelScene extends Phaser.Scene {
 
   private interactWith(target: TargetId, item?: ItemId): void {
     if (this.busy) return;
+    if (!this.canReach(target)) {
+      this.onUnreachable(target);
+      return;
+    }
     const chosen = item ?? this.inventory.selectedItem ?? this.run.usableItemsFor(target)[0] ?? null;
     if (!chosen) {
       this.onTargetTapped(target);
@@ -454,9 +468,9 @@ export abstract class BaseLevelScene extends Phaser.Scene {
     if (!camera.worldView.contains(bounds.centerX, bounds.centerY)) {
       this.setBusy(true);
       camera.stopFollow();
-      camera.pan(bounds.centerX, GAME_HEIGHT / 2, 900, 'Sine.easeInOut');
+      camera.pan(bounds.centerX, bounds.centerY, 900, 'Sine.easeInOut');
       this.time.delayedCall(2300, () => {
-        camera.pan(this.player.x, GAME_HEIGHT / 2, 700, 'Sine.easeInOut', false, (_cam: Phaser.Cameras.Scene2D.Camera, progress: number) => {
+        camera.pan(this.player.x, this.player.y - 100, 700, 'Sine.easeInOut', false, (_cam: Phaser.Cameras.Scene2D.Camera, progress: number) => {
           if (progress < 1) return;
           camera.startFollow(this.player, true, 0.12, 0.12, 0, 60);
           this.setBusy(false);

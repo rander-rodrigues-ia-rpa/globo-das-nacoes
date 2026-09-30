@@ -22,9 +22,16 @@ export const COLORS = {
   night: 0x1b2440,
 } as const;
 
+/**
+ * Camadas de desenho. No mundo, a profundidade é a altura (y) de cada objeto,
+ * para quem está mais "na frente" aparecer por cima — e o mundo pode ter até
+ * alguns milhares de pixels de altura (a torre do Brasil tem 1600).
+ */
 export const DEPTH = {
-  hud: 1000,
-  overlay: 2000,
+  /** Efeitos por cima dos personagens (splash, objetos voando). */
+  effects: 5000,
+  hud: 10000,
+  overlay: 20000,
 } as const;
 
 export function textStyle(

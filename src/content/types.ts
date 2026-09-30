@@ -27,6 +27,7 @@ export interface GameText {
     allFragmentsSoon: string;
     gotItem: (itemName: string) => string;
     continueAdventure: string;
+    jump: string;
   };
   heroes: Record<HeroId, { name: string; role: string }>;
   intro: readonly { title: string; narration: string }[];

@@ -68,6 +68,17 @@ describe('LevelRun — África (trilha de comida)', () => {
   });
 });
 
+describe('LevelRun — Brasil', () => {
+  it('o Super Balde lava o Capitão Cascudo e libera o último fragmento', () => {
+    const run = new LevelRun(catalog.get('brasil'));
+    expect(run.nextHint()).toEqual({ kind: 'find-item', item: 'super-balde', pickup: 'super-balde-do-quiosque' });
+    run.pickUp('super-balde-do-quiosque');
+    expect(run.useItem('super-balde', 'capitao').kind).toBe('success');
+    expect(run.stateOf('capitao')).toBe('molhado');
+    expect(run.collectFragment()).toBe(true);
+  });
+});
+
 describe('LevelRun — Inglaterra (condições encadeadas)', () => {
   it('só abre o armário depois de distrair o diretor com a lanterna', () => {
     const run = new LevelRun(catalog.get('inglaterra'));

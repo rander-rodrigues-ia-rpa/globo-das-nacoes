@@ -2,6 +2,7 @@ import type Phaser from 'phaser';
 import type { LevelId } from '../../core';
 import { AfricaScene } from './AfricaScene';
 import { AlaskaScene } from './AlaskaScene';
+import { BrazilScene } from './BrazilScene';
 import { DubaiScene } from './DubaiScene';
 import { EnglandScene } from './EnglandScene';
 
@@ -28,7 +29,7 @@ export const LEVEL_VIEWS: readonly LevelView[] = [
   { levelId: 'inglaterra', pin: { x: 572, y: 150 }, color: 0xf7c948, scene: EnglandScene },
   { levelId: 'dubai', pin: { x: 800, y: 292 }, color: 0xff9f2e, scene: DubaiScene },
   { levelId: 'africa', pin: { x: 690, y: 385 }, color: 0x3cc46a, scene: AfricaScene },
-  { levelId: 'brasil', pin: { x: 398, y: 470 }, color: 0xff4d6d },
+  { levelId: 'brasil', pin: { x: 398, y: 470 }, color: 0xff4d6d, scene: BrazilScene },
 ];
 
 export function levelView(levelId: LevelId): LevelView | undefined {

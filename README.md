@@ -16,7 +16,7 @@ um herói (João, Gabriel ou Larissa) e viaja pelo mundo para recuperá-los.
 | **Fase 2 — Inglaterra** (chaves + lanterna, furtividade com o Diretor Mau → Fragmento do Conhecimento) | ✅ jogável |
 | **Fase 3 — Dubai** (blecaute, lanterna revela pegadas, perseguição, minijogo do celular → Fragmento do Brilho) | ✅ jogável |
 | **Fase 4 — África** (trilha de comida leva os leões até a lagoa → Fragmento da Natureza) | ✅ jogável |
-| Fase 5 (Brasil) | regras prontas no núcleo; cena "em breve" |
+| **Fase 5 — Brasil** (escalar a torre pulando caixotes, Super Balde no Capitão Cascudo → Fragmento da Alegria) | ✅ jogável |
 | Altar do Mundo e epílogo | a fazer |
 | Arte e sons | **provisórios** (SVG gerado + voz sintetizada do aparelho) |
 
@@ -40,6 +40,8 @@ empacotado como app com Capacitor.
 |---|---|---|
 | Andar | tocar no chão | setas ou WASD |
 | Usar item | arrastar o item até o personagem, ou tocar no item e depois no personagem | 1–4 escolhe o item, Espaço/Enter usa no mais próximo |
+| Subir/descer escada (Brasil) | tocar na escada | ↑ / ↓ perto da escada |
+| Pular (Brasil) | botão "Pular" | Espaço ou J |
 | Dica | botão da lâmpada | H |
 | Voltar ao mapa | botão da casa | Esc |
 

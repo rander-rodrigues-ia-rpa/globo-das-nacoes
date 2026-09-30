@@ -6,6 +6,7 @@ import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { drawAfrica } from './art/africa.mjs';
+import { drawBrazil } from './art/brasil.mjs';
 import { drawDubai } from './art/dubai.mjs';
 import { drawEngland } from './art/inglaterra.mjs';
 
@@ -329,6 +330,7 @@ write(
 drawEngland({ svg, write, OUTLINE });
 drawDubai({ svg, write, OUTLINE });
 drawAfrica({ svg, write, OUTLINE });
+drawBrazil({ svg, write, OUTLINE });
 
 // Floco de neve (partícula) e brilho.
 write('snowflake.svg', svg(16, 16, `<circle cx="8" cy="8" r="6" fill="#fff"/>`));
