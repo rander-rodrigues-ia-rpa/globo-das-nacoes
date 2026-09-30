@@ -38,11 +38,11 @@ describe('LevelCatalog', () => {
       script: {
         pickups: [{ id: 'p', item: 'peixe' }],
         targets: [{ id: 'urso', initialState: 'bloqueando' }],
-        interactions: [{ target: 'uso', item: 'pexe', from: 'bloqueando', to: 'dormindo' }],
+        interactions: [{ target: 'uso', item: 'pexe', from: 'bloqueando', to: 'dormindo', effects: [{ target: 'foca', state: 'x' }] }],
         fragmentRequires: [{ target: 'urso', state: 'dormindo' }],
       },
     };
-    expect(validateLevel(broken)).toHaveLength(3);
+    expect(validateLevel(broken)).toHaveLength(4);
     expect(() => new LevelCatalog([broken])).toThrow(/inválida/);
   });
 });

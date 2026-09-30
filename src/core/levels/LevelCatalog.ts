@@ -68,13 +68,18 @@ export function validateLevel(level: LevelDefinition): string[] {
     checkTarget(rule.target, where);
     if (!obtainable.has(rule.item)) problems.push(`${where} usa o item "${rule.item}", que não existe no cenário`);
     rule.requires?.forEach((c) => checkTarget(c.target, where));
+    rule.effects?.forEach((c) => checkTarget(c.target, where));
   });
   fragmentRequires.forEach((c) => checkTarget(c.target, 'fragmentRequires'));
 
   // Cada estado exigido pelo fragmento precisa ser alcançável (inicial ou destino de alguma regra).
   fragmentRequires.forEach((c) => {
     const initial = targets.find((t) => t.id === c.target)?.initialState;
-    const reachable = initial === c.state || interactions.some((r) => r.target === c.target && r.to === c.state);
+    const reachable =
+      initial === c.state ||
+      interactions.some(
+        (r) => (r.target === c.target && r.to === c.state) || r.effects?.some((e) => e.target === c.target && e.state === c.state),
+      );
     if (!reachable) problems.push(`o estado "${c.state}" do alvo "${c.target}" nunca é alcançado`);
   });
 

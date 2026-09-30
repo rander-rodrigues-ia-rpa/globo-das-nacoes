@@ -8,6 +8,7 @@ import { COLORS, GAME_HEIGHT, textStyle } from '../theme';
 import { Caption } from '../ui/Caption';
 import { FragmentTray } from '../ui/FragmentTray';
 import { Hud } from '../ui/Hud';
+import { onTap } from '../ui/onTap';
 import { fadeIn, goTo } from '../ui/transitions';
 
 /** Mapa interativo do mundo: uma "bolinha" por fase, liberadas em sequência. */
@@ -103,7 +104,7 @@ export class WorldMapScene extends Phaser.Scene {
     }
 
     pin.setSize(120, 150).setInteractive({ useHandCursor: true });
-    pin.on('pointerup', () => {
+    onTap(pin, () => {
       if (this.traveling) return;
       if (status === 'locked') {
         sfx.play('locked');

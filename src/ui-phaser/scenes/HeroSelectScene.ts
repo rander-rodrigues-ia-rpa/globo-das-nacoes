@@ -8,6 +8,7 @@ import { drawSkyBackground } from '../ui/backgrounds';
 import { Button } from '../ui/Button';
 import { Caption } from '../ui/Caption';
 import { Hud } from '../ui/Hud';
+import { onTap } from '../ui/onTap';
 import { fadeIn, goTo } from '../ui/transitions';
 
 /** A criança escolhe UM dos três heróis. */
@@ -55,7 +56,7 @@ export class HeroSelectScene extends Phaser.Scene {
       const role = this.add.text(0, 172, text.heroes[hero.id].role, textStyle(28, '#7D5A2E')).setOrigin(0.5);
       card.add([bg, portrait, name, role]);
       card.setSize(320, 420).setInteractive({ useHandCursor: true });
-      card.on('pointerup', () => {
+      onTap(card, () => {
         this.chosen = hero.id;
         sfx.play('pickup');
         caption.setVisible(false);

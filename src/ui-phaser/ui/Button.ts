@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { services } from '../AppServices';
 import { COLORS, textStyle } from '../theme';
+import { onTap } from './onTap';
 
 export interface ButtonOptions {
   label?: string;
@@ -46,10 +47,9 @@ export class Button extends Phaser.GameObjects.Container {
     this.setSize(width, height);
     this.setInteractive({ useHandCursor: true });
     this.on('pointerdown', () => {
-      if (!this.enabled) return;
-      scene.tweens.add({ targets: this, scale: 0.92, duration: 70, yoyo: true });
+      if (this.enabled) scene.tweens.add({ targets: this, scale: 0.92, duration: 70, yoyo: true });
     });
-    this.on('pointerup', () => {
+    onTap(this, () => {
       if (!this.enabled) return;
       services(scene).sfx.play('tap');
       this.options.onPress();

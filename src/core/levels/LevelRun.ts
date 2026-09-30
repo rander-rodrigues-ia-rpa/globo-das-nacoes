@@ -98,6 +98,12 @@ export class LevelRun {
     this.targetStates.set(target, result.to);
     this.events.emit('item-used', result);
     this.events.emit('target-changed', { target, from: result.from, to: result.to });
+    for (const effect of rule.effects ?? []) {
+      const from = this.stateOf(effect.target);
+      if (from === effect.state) continue;
+      this.targetStates.set(effect.target, effect.state);
+      this.events.emit('target-changed', { target: effect.target, from, to: effect.state });
+    }
     if (this.isFragmentAvailable() && !this.fragmentAnnounced) {
       this.fragmentAnnounced = true;
       this.events.emit('fragment-available', { fragmentId: this.definition.fragmentId });

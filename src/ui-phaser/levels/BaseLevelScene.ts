@@ -9,15 +9,18 @@ import { Button } from '../ui/Button';
 import { Caption } from '../ui/Caption';
 import { Hud } from '../ui/Hud';
 import { InventoryBar } from '../ui/InventoryBar';
+import { onTap } from '../ui/onTap';
 import { fadeIn, goTo } from '../ui/transitions';
 import { PlayerAvatar } from '../world/PlayerAvatar';
 
 type Interactive = Phaser.GameObjects.Image | Phaser.GameObjects.Sprite;
 
+type Point = { x: number; y: number };
+
 interface TargetView {
   object: Interactive;
-  /** Onde o herói para ao interagir com o alvo. */
-  approach: { x: number; y: number };
+  /** Onde o herói para ao interagir com o alvo (função para alvos que andam). */
+  approach: Point | (() => Point);
 }
 
 export interface WorldLayout {
@@ -82,6 +85,9 @@ export abstract class BaseLevelScene extends Phaser.Scene {
   /** O herói tentou passar de um bloqueio. */
   protected onBlocked(): void {}
 
+  /** Chamado a cada quadro enquanto a criança está no controle (patrulhas, vigias...). */
+  protected onUpdate(_time: number, _delta: number): void {}
+
   /** Espera antes de mostrar o fragmento liberado (para caber a animação do vilão). */
   protected fragmentRevealDelay(): number {
     return 0;
@@ -145,6 +151,7 @@ export abstract class BaseLevelScene extends Phaser.Scene {
 
     this.checkPickups();
     this.checkFragment();
+    this.onUpdate(time, delta);
 
     if (time - this.lastProgressAt > IDLE_HINT_MS) {
       this.lastProgressAt = time;
@@ -157,20 +164,23 @@ export abstract class BaseLevelScene extends Phaser.Scene {
   protected registerPickup(pickup: PickupId, object: Interactive): void {
     this.pickups.set(pickup, object);
     object.setInteractive({ useHandCursor: true });
-    object.on('pointerup', () => !this.busy && this.player.walkTo(object.x, this.clampY(object.y + 10)));
+    onTap(object, () => !this.busy && this.player.walkTo(object.x, this.clampY(object.y + 10)));
   }
 
-  protected registerTarget(target: TargetId, object: Interactive, approach: { x: number; y: number }): void {
+  protected registerTarget(target: TargetId, object: Interactive, approach: TargetView['approach']): void {
     this.targets.set(target, { object, approach });
     object.setInteractive({ useHandCursor: true });
-    object.on('pointerup', () => this.interactWith(target));
+    onTap(object, () => this.interactWith(target));
   }
 
-  /** O fragmento fica escondido até o roteiro liberar. */
-  protected registerFragment(x: number, y: number): Interactive {
-    const fragment = this.add.image(x, y, fragmentTexture(this.run.definition.fragmentId)).setAlpha(0).setScale(0.2);
+  /**
+   * O fragmento fica escondido até o roteiro liberar.
+   * `depth` permite desenhá-lo na frente de algo (ex.: dentro do armário aberto).
+   */
+  protected registerFragment(x: number, y: number, depth = y): Interactive {
+    const fragment = this.add.image(x, y, fragmentTexture(this.run.definition.fragmentId)).setAlpha(0).setScale(0.2).setDepth(depth);
     this.fragment = fragment;
-    fragment.on('pointerup', () => !this.busy && this.player.walkTo(fragment.x, this.clampY(fragment.y + 60)));
+    onTap(fragment, () => !this.busy && this.player.walkTo(fragment.x, this.clampY(fragment.y + 60)));
     return fragment;
   }
 
@@ -229,7 +239,8 @@ export abstract class BaseLevelScene extends Phaser.Scene {
     let nearest: TargetId | null = null;
     let best = INTERACT_RADIUS;
     for (const [id, view] of this.targets) {
-      const d = Phaser.Math.Distance.Between(this.player.x, this.player.y, view.approach.x, view.approach.y);
+      const approach = this.approachOf(view);
+      const d = Phaser.Math.Distance.Between(this.player.x, this.player.y, approach.x, approach.y);
       if (d < best) {
         best = d;
         nearest = id;
@@ -251,8 +262,12 @@ export abstract class BaseLevelScene extends Phaser.Scene {
       this.onTargetTapped(target);
       return;
     }
-    const { approach } = this.targets.get(target)!;
-    this.player.walkTo(approach.x, approach.y, () => this.applyItem(chosen, target));
+    const approach = this.approachOf(this.targets.get(target)!);
+    this.player.walkTo(approach.x, this.clampY(approach.y), () => this.applyItem(chosen, target));
+  }
+
+  private approachOf(view: TargetView): Point {
+    return typeof view.approach === 'function' ? view.approach() : view.approach;
   }
 
   private applyItem(item: ItemId, target: TargetId): void {
@@ -317,7 +332,7 @@ export abstract class BaseLevelScene extends Phaser.Scene {
   private revealFragment(): void {
     const fragment = this.fragment;
     if (!fragment) return;
-    fragment.setInteractive({ useHandCursor: true }).setDepth(fragment.y);
+    fragment.setInteractive({ useHandCursor: true });
     this.tweens.add({ targets: fragment, alpha: 1, scale: 0.75, duration: 900, ease: 'Back.Out' });
     this.tweens.add({ targets: fragment, y: fragment.y - 14, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.InOut' });
     this.add
@@ -328,7 +343,7 @@ export abstract class BaseLevelScene extends Phaser.Scene {
         frequency: 180,
         blendMode: 'ADD',
       })
-      .setDepth(fragment.y + 1);
+      .setDepth(fragment.depth + 1);
   }
 
   private checkFragment(): void {
@@ -429,9 +444,9 @@ export abstract class BaseLevelScene extends Phaser.Scene {
     if (!camera.worldView.contains(bounds.centerX, bounds.centerY)) {
       this.setBusy(true);
       camera.stopFollow();
-      camera.pan(bounds.centerX, GAME_HEIGHT / 2, 900, 'Sine.InOut');
+      camera.pan(bounds.centerX, GAME_HEIGHT / 2, 900, 'Sine.easeInOut');
       this.time.delayedCall(2300, () => {
-        camera.pan(this.player.x, GAME_HEIGHT / 2, 700, 'Sine.InOut', false, (_cam: Phaser.Cameras.Scene2D.Camera, progress: number) => {
+        camera.pan(this.player.x, GAME_HEIGHT / 2, 700, 'Sine.easeInOut', false, (_cam: Phaser.Cameras.Scene2D.Camera, progress: number) => {
           if (progress < 1) return;
           camera.startFollow(this.player, true, 0.12, 0.12, 0, 60);
           this.setBusy(false);

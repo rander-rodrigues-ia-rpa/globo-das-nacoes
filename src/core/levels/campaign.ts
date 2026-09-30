@@ -32,14 +32,20 @@ export const CAMPAIGN_LEVELS: readonly LevelDefinition[] = [
         { id: 'armario', initialState: 'trancado' },
       ],
       interactions: [
-        // A lanterna faz sinais na janela e distrai o Diretor Mau.
-        { target: 'janela', item: 'lanterna', from: 'escura', to: 'sinalizando', consumesItem: false },
+        // A lanterna fica piscando na janela e o Diretor Mau vai olhar lá fora.
+        {
+          target: 'janela',
+          item: 'lanterna',
+          from: 'escura',
+          to: 'sinalizando',
+          effects: [{ target: 'diretor', state: 'distraido' }],
+        },
         {
           target: 'armario',
           item: 'chaves',
           from: 'trancado',
           to: 'aberto',
-          requires: [{ target: 'janela', state: 'sinalizando' }],
+          requires: [{ target: 'diretor', state: 'distraido' }],
         },
       ],
       fragmentRequires: [{ target: 'armario', state: 'aberto' }],

@@ -10,7 +10,17 @@ export interface Narrator {
   setEnabled(enabled: boolean): void;
 }
 
-export type SoundEffect = 'tap' | 'pickup' | 'success' | 'wrong' | 'fragment' | 'growl' | 'snore' | 'locked';
+export type SoundEffect =
+  | 'tap'
+  | 'pickup'
+  | 'success'
+  | 'wrong'
+  | 'fragment'
+  | 'growl'
+  | 'snore'
+  | 'locked'
+  | 'alert'
+  | 'unlock';
 
 export interface SoundEffects {
   play(effect: SoundEffect): void;

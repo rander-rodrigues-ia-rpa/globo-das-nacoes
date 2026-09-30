@@ -26,6 +26,16 @@ const EFFECTS: Record<SoundEffect, Note[]> = {
     { freq: 1047, at: 0.36, duration: 0.45, type: 'triangle' },
     { freq: 1568, at: 0.4, duration: 0.4, type: 'sine', gain: 0.08 },
   ],
+  // Apito do diretor.
+  alert: [
+    { freq: 1760, at: 0, duration: 0.12, type: 'square', gain: 0.07 },
+    { freq: 1760, at: 0.16, duration: 0.3, type: 'square', gain: 0.07, slideTo: 1600 },
+  ],
+  unlock: [
+    { freq: 900, at: 0, duration: 0.05, type: 'square', gain: 0.08 },
+    { freq: 600, at: 0.07, duration: 0.07, type: 'square', gain: 0.08 },
+    { freq: 1200, at: 0.2, duration: 0.18, type: 'triangle' },
+  ],
   growl: [{ freq: 110, at: 0, duration: 0.5, type: 'sawtooth', slideTo: 70, gain: 0.12 }],
   snore: [
     { freq: 90, at: 0, duration: 0.6, type: 'sine', slideTo: 140, gain: 0.25 },

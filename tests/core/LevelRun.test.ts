@@ -43,8 +43,14 @@ describe('LevelRun — Inglaterra (condições encadeadas)', () => {
     expect(run.nextHint()).toEqual({ kind: 'find-item', item: 'lanterna', pickup: 'lanterna-da-sala' });
 
     run.pickUp('lanterna-da-sala');
+    const changes: string[] = [];
+    run.events.on('target-changed', ({ target, to }) => changes.push(`${target}:${to}`));
     expect(run.useItem('lanterna', 'janela').kind).toBe('success');
-    expect(run.hasItem('lanterna')).toBe(true); // a lanterna não é consumida
+    // efeito colateral: os sinais na janela distraem o diretor
+    expect(changes).toEqual(['janela:sinalizando', 'diretor:distraido']);
+    expect(run.stateOf('diretor')).toBe('distraido');
+    expect(run.hasItem('lanterna')).toBe(false); // fica piscando na janela
+    expect(run.nextHint()).toEqual({ kind: 'use-item', item: 'chaves', target: 'armario' });
     expect(run.useItem('chaves', 'armario').kind).toBe('success');
     expect(run.isFragmentAvailable()).toBe(true);
   });

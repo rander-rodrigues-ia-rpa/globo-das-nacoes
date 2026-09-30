@@ -1,6 +1,7 @@
 import type Phaser from 'phaser';
 import type { LevelId } from '../../core';
 import { AlaskaScene } from './AlaskaScene';
+import { EnglandScene } from './EnglandScene';
 
 /**
  * Como cada fase do catálogo aparece NESTE frontend.
@@ -22,7 +23,7 @@ export interface LevelView {
 
 export const LEVEL_VIEWS: readonly LevelView[] = [
   { levelId: 'alasca', pin: { x: 150, y: 190 }, color: 0x46b7f0, scene: AlaskaScene },
-  { levelId: 'inglaterra', pin: { x: 572, y: 150 }, color: 0xf7c948 },
+  { levelId: 'inglaterra', pin: { x: 572, y: 150 }, color: 0xf7c948, scene: EnglandScene },
   { levelId: 'dubai', pin: { x: 800, y: 292 }, color: 0xff9f2e },
   { levelId: 'africa', pin: { x: 690, y: 385 }, color: 0x3cc46a },
   { levelId: 'brasil', pin: { x: 398, y: 470 }, color: 0xff4d6d },

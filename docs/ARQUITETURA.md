@@ -37,6 +37,8 @@
 - **`LevelDefinition`**: cada fase é um *roteiro de dados* no formato do "Ciclo do Aventureiro":
   itens no cenário (`pickups`), coisas que mudam de estado (`targets`), regras
   "usar item X no alvo Y" (`interactions`) e as condições para o fragmento aparecer.
+  Uma regra pode exigir outros estados antes (`requires`) e mudar outros alvos junto
+  (`effects`) — ex.: sinais na janela deixam o diretor `distraido`.
 - **`LevelRun`**: executa uma tentativa da fase. Responde se usar um item deu certo,
   se foi o item errado ou se "ainda falta algo antes", e calcula **dicas** (`nextHint`).
 - **`LevelCatalog`**: registro das fases com **validação** (erros de digitação no roteiro
@@ -60,9 +62,20 @@
    e o fragmento em `fragments`. O teste `content.test.ts` acusa o que faltar.
 3. **Arte** — adicione os arquivos em `public/assets/sprites/` e as chaves em `src/ui-phaser/assets.ts`.
 4. **Cena** — crie `src/ui-phaser/levels/MinhaFaseScene.ts` estendendo `BaseLevelScene`:
-   implemente `buildWorld()` e registre itens (`registerPickup`), alvos (`registerTarget`)
-   e o fragmento (`registerFragment`). Use os ganchos `onItemUsed`, `onTargetTapped`,
-   `walkLimit`/`onBlocked` e `fragmentRevealDelay` para o comportamento especial.
+   implemente `buildWorld()` e registre itens (`registerPickup`), alvos (`registerTarget`;
+   a posição de aproximação pode ser uma função, para alvos que andam) e o fragmento
+   (`registerFragment`). Ganchos disponíveis para o comportamento especial:
+
+   | Gancho | Para quê | Exemplo |
+   |---|---|---|
+   | `onItemUsed` | animar o resultado de um item | urso come e dorme |
+   | `onTargetTapped` | tocar num alvo sem item útil | urso rosna, diretor reclama |
+   | `walkLimit` / `onBlocked` | bloquear passagem | urso na caverna, porta da diretoria |
+   | `onUpdate` | lógica a cada quadro | patrulha e cone de visão do diretor |
+   | `fragmentRevealDelay` | esperar a animação antes de mostrar o fragmento | |
+
+   Use `onTap` (em `ui/onTap.ts`) para qualquer objeto tocável: o toque só conta se
+   começar e terminar no objeto.
 5. **Registro** — em `src/ui-phaser/levels/registry.ts`, informe a posição no mapa e a `scene`.
 
 Fases sem `scene` aparecem no mapa como "em breve" — dá para planejar a campanha antes de desenhar.

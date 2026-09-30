@@ -80,10 +80,22 @@ export const ptBR: GameText = {
     },
     inglaterra: {
       country: 'Inglaterra',
-      place: 'Escola Britânica',
-      intro: [],
+      place: 'Escola Britânica e Parquinho',
+      intro: [
+        'Bem-vindo à Inglaterra!',
+        'O Fragmento do Conhecimento está trancado no armário da diretoria. Cuidado com o Diretor Mau!',
+      ],
       targets: { janela: 'a janela', diretor: 'o Diretor Mau', armario: 'o armário' },
-      lines: {},
+      lines: {
+        caught: 'Ei! Nada de correr pelos corredores! Volte já para lá!',
+        caughtHint: 'O Diretor Mau vigia o corredor. Que tal chamar a atenção dele para outro lugar?',
+        directorTapped: 'Hmpf! Na minha escola ninguém passa sem permissão!',
+        avoidLight: 'Não pise na luz amarela: é para onde o diretor está olhando!',
+        windowSignal: 'Pisca, pisca! A lanterna está fazendo sinais de luz na janela!',
+        directorDistracted: 'Que luz é essa? Preciso ver isso de perto!',
+        sneak: 'Psiu! Passe de fininho enquanto ele olha pela janela!',
+        lockerOpen: 'Clique! As chaves abriram o armário!',
+      },
       celebration: 'Parabéns! Você encontrou o Fragmento do Conhecimento!',
     },
     dubai: {

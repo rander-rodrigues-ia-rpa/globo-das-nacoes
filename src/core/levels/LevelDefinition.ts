@@ -53,4 +53,6 @@ export interface InteractionRule {
   consumesItem?: boolean;
   /** Outras condições que precisam valer antes (ex.: diretor distraído antes de abrir o armário). */
   requires?: readonly TargetCondition[];
+  /** Outros alvos que mudam junto (ex.: sinais na janela → o diretor fica distraído). */
+  effects?: readonly TargetCondition[];
 }
