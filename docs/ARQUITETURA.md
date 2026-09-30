@@ -72,7 +72,7 @@
    | `onTargetTapped` | tocar num alvo sem item útil | urso rosna, diretor reclama |
    | `walkLimit` / `onBlocked` | bloquear passagem | urso na caverna, porta da diretoria |
    | `onUpdate` | lógica a cada quadro | patrulha e cone de visão do diretor |
-   | `fragmentRevealDelay` | esperar a animação antes de mostrar o fragmento | |
+   | `fragmentRevealDelay` | esperar a animação antes de mostrar o fragmento (ou `'manual'` + `revealFragment()`) | minijogo do celular em Dubai |
 
    Use `onTap` (em `ui/onTap.ts`) para qualquer objeto tocável: o toque só conta se
    começar e terminar no objeto.

@@ -14,7 +14,8 @@ um herói (João, Gabriel ou Larissa) e viaja pelo mundo para recuperá-los.
 | Mapa-múndi com liberação das fases em sequência | ✅ |
 | **Fase 1 — Alasca** (peixe → urso dorme → Fragmento de Gelo) | ✅ jogável |
 | **Fase 2 — Inglaterra** (chaves + lanterna, furtividade com o Diretor Mau → Fragmento do Conhecimento) | ✅ jogável |
-| Fases 3 a 5 (Dubai, África, Brasil) | regras prontas no núcleo; cenas "em breve" |
+| **Fase 3 — Dubai** (blecaute, lanterna revela pegadas, perseguição, minijogo do celular → Fragmento do Brilho) | ✅ jogável |
+| Fases 4 e 5 (África, Brasil) | regras prontas no núcleo; cenas "em breve" |
 | Altar do Mundo e epílogo | a fazer |
 | Arte e sons | **provisórios** (SVG gerado + voz sintetizada do aparelho) |
 

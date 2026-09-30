@@ -20,7 +20,11 @@ export type SoundEffect =
   | 'snore'
   | 'locked'
   | 'alert'
-  | 'unlock';
+  | 'unlock'
+  | 'powerdown'
+  | 'powerup'
+  | 'laugh'
+  | 'beep';
 
 export interface SoundEffects {
   play(effect: SoundEffect): void;

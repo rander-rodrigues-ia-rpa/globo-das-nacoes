@@ -36,6 +36,14 @@ const EFFECTS: Record<SoundEffect, Note[]> = {
     { freq: 600, at: 0.07, duration: 0.07, type: 'square', gain: 0.08 },
     { freq: 1200, at: 0.2, duration: 0.18, type: 'triangle' },
   ],
+  powerdown: [{ freq: 440, at: 0, duration: 0.9, type: 'sawtooth', slideTo: 40, gain: 0.12 }],
+  powerup: [
+    { freq: 60, at: 0, duration: 0.7, type: 'sawtooth', slideTo: 520, gain: 0.1 },
+    { freq: 1047, at: 0.65, duration: 0.3, type: 'triangle' },
+  ],
+  // "He-he-he" do ladrão.
+  laugh: [0, 0.14, 0.28].map((at, i) => ({ freq: 520 - i * 40, at, duration: 0.09, type: 'square' as OscillatorType, gain: 0.06 })),
+  beep: [{ freq: 988, at: 0, duration: 0.08, type: 'sine', gain: 0.15 }],
   growl: [{ freq: 110, at: 0, duration: 0.5, type: 'sawtooth', slideTo: 70, gain: 0.12 }],
   snore: [
     { freq: 90, at: 0, duration: 0.6, type: 'sine', slideTo: 140, gain: 0.25 },

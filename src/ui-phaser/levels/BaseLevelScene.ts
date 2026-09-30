@@ -88,8 +88,11 @@ export abstract class BaseLevelScene extends Phaser.Scene {
   /** Chamado a cada quadro enquanto a criança está no controle (patrulhas, vigias...). */
   protected onUpdate(_time: number, _delta: number): void {}
 
-  /** Espera antes de mostrar o fragmento liberado (para caber a animação do vilão). */
-  protected fragmentRevealDelay(): number {
+  /**
+   * Espera antes de mostrar o fragmento liberado (para caber a animação do vilão).
+   * 'manual': a própria fase chama revealFragment() quando a cena terminar.
+   */
+  protected fragmentRevealDelay(): number | 'manual' {
     return 0;
   }
 
@@ -121,14 +124,19 @@ export abstract class BaseLevelScene extends Phaser.Scene {
 
     this.setupInput();
     this.run.events.on('item-picked', () => this.inventory.setItems(this.run.items));
-    this.run.events.on('fragment-available', () => this.time.delayedCall(this.fragmentRevealDelay(), () => this.revealFragment()));
+    this.run.events.on('fragment-available', () => {
+      const delay = this.fragmentRevealDelay();
+      if (delay !== 'manual') this.time.delayedCall(delay, () => this.revealFragment());
+    });
 
     this.lastProgressAt = this.time.now;
     this.showTitleCard();
   }
 
-  update(time: number, delta: number): void {
+  update(_time: number, delta: number): void {
     if (this.busy) return;
+    // Um único relógio (o da cena) para bloqueios, dicas e ganchos das fases.
+    const time = this.time.now;
     const { cursors, wasd } = this.keys;
     const dx = (cursors.right.isDown || wasd.D.isDown ? 1 : 0) - (cursors.left.isDown || wasd.A.isDown ? 1 : 0);
     const dy = (cursors.down.isDown || wasd.S.isDown ? 1 : 0) - (cursors.up.isDown || wasd.W.isDown ? 1 : 0);
@@ -329,9 +337,9 @@ export abstract class BaseLevelScene extends Phaser.Scene {
     });
   }
 
-  private revealFragment(): void {
+  protected revealFragment(): void {
     const fragment = this.fragment;
-    if (!fragment) return;
+    if (!fragment || fragment.input?.enabled) return;
     fragment.setInteractive({ useHandCursor: true });
     this.tweens.add({ targets: fragment, alpha: 1, scale: 0.75, duration: 900, ease: 'Back.Out' });
     this.tweens.add({ targets: fragment, y: fragment.y - 14, duration: 900, yoyo: true, repeat: -1, ease: 'Sine.InOut' });
@@ -421,7 +429,8 @@ export abstract class BaseLevelScene extends Phaser.Scene {
         const targetName = this.levelText.targets[hint.target] ?? hint.target;
         this.say(text.hints.useItem(text.items[hint.item]?.the ?? hint.item, targetName));
         this.inventory.highlight(hint.item);
-        this.pointAt(this.targetObject(hint.target));
+        const target = this.targets.get(hint.target);
+        if (target) this.pointAt(target.object);
         break;
       }
       case 'collect-fragment':

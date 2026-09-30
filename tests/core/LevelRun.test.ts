@@ -32,6 +32,24 @@ describe('LevelRun — Alasca', () => {
   });
 });
 
+describe('LevelRun — Dubai (blecaute)', () => {
+  it('lanterna revela as pegadas; o celular liga o gerador e assusta o ladrão', () => {
+    const run = new LevelRun(catalog.get('dubai'));
+    expect(run.nextHint()).toEqual({ kind: 'find-item', item: 'lanterna', pickup: 'lanterna-do-balcao' });
+    run.pickUp('lanterna-do-balcao');
+    run.pickUp('celular-perdido');
+
+    expect(run.useItem('celular', 'gerador').kind).toBe('not-ready'); // no escuro, sem pistas
+    expect(run.useItem('lanterna', 'pegadas').kind).toBe('success');
+    expect(run.hasItem('lanterna')).toBe(true); // continua acesa
+
+    expect(run.nextHint()).toEqual({ kind: 'use-item', item: 'celular', target: 'gerador' });
+    expect(run.useItem('celular', 'gerador').kind).toBe('success');
+    expect(run.stateOf('ladrao')).toBe('assustado');
+    expect(run.isFragmentAvailable()).toBe(true);
+  });
+});
+
 describe('LevelRun — Inglaterra (condições encadeadas)', () => {
   it('só abre o armário depois de distrair o diretor com a lanterna', () => {
     const run = new LevelRun(catalog.get('inglaterra'));

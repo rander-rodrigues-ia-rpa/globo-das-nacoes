@@ -63,18 +63,22 @@ export const CAMPAIGN_LEVELS: readonly LevelDefinition[] = [
       targets: [
         { id: 'pegadas', initialState: 'invisiveis' },
         { id: 'gerador', initialState: 'desligado' },
+        { id: 'ladrao', initialState: 'fugindo' },
       ],
       interactions: [
+        // A lanterna fica acesa (não é consumida) e revela as pegadas do ladrão.
         { target: 'pegadas', item: 'lanterna', from: 'invisiveis', to: 'reveladas', consumesItem: false },
+        // O celular liga os geradores; o clarão assusta o ladrão, que larga o fragmento.
         {
           target: 'gerador',
           item: 'celular',
           from: 'desligado',
           to: 'ligado',
           requires: [{ target: 'pegadas', state: 'reveladas' }],
+          effects: [{ target: 'ladrao', state: 'assustado' }],
         },
       ],
-      fragmentRequires: [{ target: 'gerador', state: 'ligado' }],
+      fragmentRequires: [{ target: 'ladrao', state: 'assustado' }],
     },
   },
   {
