@@ -192,7 +192,7 @@ export const ptBR: GameText = {
       brasil: 'O Capitão Cascudo abriu as válvulas e relaxa na piscina.',
     },
     message: 'Parabéns! Você uniu o mundo novamente. Graças a você, a aventura e a amizade estão protegidas em todos os países! Até a próxima viagem!',
-    credits: ['Direção Criativa & Idealização: Sofia Mendes', 'Design & Produção Executiva: Rafael Mendes'],
+    credits: ['Idealização: Larissa', 'Produção By Virtuoflow'],
     backToMap: 'Voltar ao mapa',
   },
   hints: {
