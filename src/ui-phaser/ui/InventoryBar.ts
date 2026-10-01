@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import type { ItemId } from '../../core';
 import { itemTexture } from '../assets';
 import { COLORS, DEPTH, GAME_HEIGHT, GAME_WIDTH } from '../theme';
+import { pinToScreen } from './pinToScreen';
 
 const SLOT = 104;
 const SLOTS = 4;
@@ -35,7 +36,7 @@ export class InventoryBar extends Phaser.GameObjects.Container {
       this.slots.push(slot);
       this.add(slot);
     }
-    this.setScrollFactor(0).setDepth(DEPTH.hud);
+    this.setDepth(DEPTH.hud);
     scene.add.existing(this);
     this.render();
   }
@@ -90,6 +91,8 @@ export class InventoryBar extends Phaser.GameObjects.Container {
       slot.setSize(88, 88).setInteractive({ useHandCursor: true });
       slot.on('pointerdown', (pointer: Phaser.Input.Pointer) => this.startDrag(item, pointer));
     });
+    // Fixa tudo na tela (inclusive os ícones novos) para o toque funcionar com a câmera rolada.
+    pinToScreen(this);
   }
 
   private startDrag(item: ItemId, pointer: Phaser.Input.Pointer): void {
