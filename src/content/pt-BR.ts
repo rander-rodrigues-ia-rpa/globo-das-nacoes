@@ -118,7 +118,7 @@ export const ptBR: GameText = {
         thiefRuns: 'Hehe! Não vai me pegar!',
         cornered: 'Ih! Corredor sem saída! E agora?',
         generatorHint: 'Aquele gerador pode acender as luzes de novo!',
-        phoneTitle: 'Toque no botão que acender!',
+        phoneTitle: 'Toque no botão verde para ligar os geradores!',
         phoneDone: 'Geradores ligados!',
         lightsBack: 'As luzes voltaram!',
         thiefScared: 'Ai, que clarão! Tá bom, tá bom, eu devolvo o fragmento!',

@@ -81,6 +81,11 @@
    Use `onTap` (em `ui/onTap.ts`) para qualquer objeto tocável: o toque só conta se
    começar e terminar no objeto.
 
+   **Grupos fixos na tela com algo tocável dentro** (mochila, celular de Dubai...): use
+   `pinToScreen` (em `ui/pinToScreen.ts`) em vez de `setScrollFactor(0)`. O Phaser calcula
+   o toque pelo scrollFactor de cada filho; fixar só o contêiner faz o desenho ficar no
+   lugar, mas o toque deixa de funcionar quando a câmera rola pelo cenário.
+
    Fases verticais informam `height` no `WorldLayout` e podem trocar `layout.walkArea`
    (o "andar" atual) a qualquer momento — veja `BrazilScene`. A profundidade no mundo é
    a altura (y); HUD e sobreposições ficam acima de tudo (`DEPTH` em `theme.ts`).
